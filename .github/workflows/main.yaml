@@ -31,6 +31,7 @@ jobs:
 
 
   matrix-job:
+    name: ${{ matrix.name }} Job
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
