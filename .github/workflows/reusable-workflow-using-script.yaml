@@ -1,0 +1,15 @@
+name: Reusable Workflow with Script
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Output the input value
+        run: "${{ GITHUB_WORKSPACE }}/.github/scripts/echo.sh ${{ inputs.value }}"

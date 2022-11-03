@@ -88,3 +88,8 @@ jobs:
           name: projects
           path: artifacts
       - run: tree
+
+  call-reusable-workflow-using-script:
+    uses: ./.github/workflows/reusable-workflow-using-script.yaml
+    with:
+      value: 42
