@@ -12,4 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Output the input value
-        run: "${{ GITHUB_WORKSPACE }}/.github/scripts/echo.sh ${{ inputs.value }}"
+        run: "$GITHUB_WORKSPACE/.github/scripts/echo.sh ${{ inputs.value }}"
