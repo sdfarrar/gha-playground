@@ -114,3 +114,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: echo "### Hello World! :rocket:" >> $GITHUB_STEP_SUMMARY
+
+  step-output:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: one
+        run: echo "my-value=foobar" >> $GITHUB_OUTPUT
+      - id: two
+        run: echo "my-value => ${{ steps.one.outputs.my-value }}"
