@@ -43,3 +43,19 @@ jobs:
       - uses: actions/checkout@v3
       - run: |
           echo "${{ matrix.project-path }} | ${{ matrix.name }}"
+
+  include-only-matrix-job:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - project-path: apps/client
+            name: Admin Client
+          - project-path: apps/server
+            name: Admin API
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          echo "${{ matrix.project-path }} | ${{ matrix.name }}"
