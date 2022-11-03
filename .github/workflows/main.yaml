@@ -107,7 +107,7 @@ jobs:
       - run: echo "::warning title=My Warning::Some warning info"
       - run: echo "::error title=My Error::Some error info"
       - run: echo "Regular message"
-      - run: ehco "::endgroup::"
+      - run: echo "::endgroup::"
 
   job-summary:
     runs-on: ubuntu-latest
