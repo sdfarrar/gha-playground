@@ -12,6 +12,7 @@ jobs:
     with:
       node: ${{ matrix.node-version }}
 
+
   print-gcloud-version:
     runs-on: ubuntu-latest
     steps:
@@ -20,12 +21,14 @@ jobs:
           gcloudVersion=$(gcloud version 2> /dev/null | grep "Google Cloud SDK" | cut -d ' ' -f 4)
           echo "$gcloudVersion"
 
+
   call-dynamic-names-workflow:
     uses: ./.github/workflows/reusable-dynamic-names-workflow.yaml
     with:
       workflow_name: Foobar Workflow
       build_type: linux
       version: 42
+
 
   matrix-job:
     runs-on: ubuntu-latest
@@ -44,6 +47,7 @@ jobs:
       - run: |
           echo "${{ matrix.project-path }} | ${{ matrix.name }}"
 
+
   include-only-matrix-job:
     runs-on: ubuntu-latest
     strategy:
@@ -59,3 +63,28 @@ jobs:
       - uses: actions/checkout@v3
       - run: |
           echo "${{ matrix.project-path }} | ${{ matrix.name }}"
+
+
+  upload-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: mkdir dist && cp -r apps dist
+      - uses: actions/upload-artifact@v3
+        with:
+          name: projects
+          path: dist
+          if-no-files-found: error
+      - run: tree
+
+
+  download-artifact:
+    needs: upload-artifact
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: projects
+          path: artifacts
+      - run: tree
