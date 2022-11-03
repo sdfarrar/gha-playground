@@ -11,3 +11,12 @@ jobs:
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
       node: ${{ matrix.node-version }}
+
+  print-gcloud-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          echo "$gcloudVersion"
+        env:
+          gcloudVersion: gcloud version 2> /dev/null | grep "Google Cloud SDK" | cut -d ' ' -f 4 
