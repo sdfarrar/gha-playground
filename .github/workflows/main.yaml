@@ -19,3 +19,10 @@ jobs:
       - run: |
           gcloudVersion=$(gcloud version 2> /dev/null | grep "Google Cloud SDK" | cut -d ' ' -f 4)
           echo "$gcloudVersion"
+
+  call-dynamic-names-workflow:
+    uses: ./.github/workflows/reusable-dynamic-names-workflow.yaml
+    with:
+      workflow_name: Foobar Workflow
+      build_type: linux
+      version: 42
