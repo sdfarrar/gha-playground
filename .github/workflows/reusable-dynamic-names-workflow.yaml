@@ -2,6 +2,20 @@ name: Dynamic Names Reusable Workflow
 run-name: ${{ inputs.workflow_name }}
 
 on:
+  workflow_dispatch:
+    inputs:
+      workflow_name:
+        description: Dyanmic workflow name
+        required: true
+        type: string
+      build_type:
+        description: Will be added to the job name
+        required: true
+        type: string
+      version:
+        description: Simple input value
+        required: true
+        type: string
   workflow_call:
     inputs:
       workflow_name:
