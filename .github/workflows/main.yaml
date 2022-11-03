@@ -17,6 +17,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
+          gcloudVersion=$(gcloud version 2> /dev/null | grep "Google Cloud SDK" | cut -d ' ' -f 4)
           echo "$gcloudVersion"
-        env:
-          gcloudVersion: gcloud version 2> /dev/null | grep "Google Cloud SDK" | cut -d ' ' -f 4 
