@@ -4,6 +4,10 @@ on:
 
 jobs:
   call-reusable-workflow:
+    strategy:
+      matrix:
+        node-version: [14, 16, 18, 20]
+
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
-      node: 14
+      node: ${{ matrix.node-version }}
