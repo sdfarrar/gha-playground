@@ -108,3 +108,9 @@ jobs:
       - run: echo "::error title=My Error::Some error info"
       - run: echo "Regular message"
       - run: ehco "::endgroup::"
+
+  job-summary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "### Hello World! :rocket:" >> $GITHUB_STEP_SUMMARY
