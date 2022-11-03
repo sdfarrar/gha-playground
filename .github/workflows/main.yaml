@@ -90,7 +90,21 @@ jobs:
           path: artifacts
       - run: tree
 
+
   call-reusable-workflow-using-script:
     uses: ./.github/workflows/reusable-workflow-using-script.yaml
     with:
       value: 42
+
+
+  messages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "::group::Message Group"
+      - run: echo "::debug::Some Debug Message"
+      - run: echo "::notice title=My Notice::Some notice info"
+      - run: echo "::warning title=My Warning::Some warning info"
+      - run: echo "::error title=My Error::Some error info"
+      - run: echo "Regular message"
+      - run: ehco "::endgroup::"
