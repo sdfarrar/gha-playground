@@ -123,3 +123,28 @@ jobs:
         run: echo "my-value=foobar" >> $GITHUB_OUTPUT
       - id: two
         run: echo "my-value => ${{ steps.one.outputs.my-value }}"
+
+  process-bash-associative-arrays:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          declare -A client=(
+            [id]='project-client'
+            [name]='client'
+            [path]='apps/client'
+          )
+          declare -A server=(
+            [id]='project-server'
+            [name]='server'
+            [path]='apps/server'
+          )
+
+          apps=(client server)
+          declare -n app
+          for app in "${apps[@]}"; do
+              echo "ID: ${app[id]}"
+              echo "Name: ${app[name]}"
+              echo "Path: ${app[path]}"
+              echo ""
+          done
