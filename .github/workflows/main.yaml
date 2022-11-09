@@ -124,6 +124,19 @@ jobs:
       - id: two
         run: echo "my-value => ${{ steps.one.outputs.my-value }}"
 
+  dynamic-output-name:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - value: foo
+    steps:
+      - uses: actions/checkout@v3
+      - id: one
+        run: echo "${{ matrix.value }}-output=bar" >> $GITHUB_OUTPUT
+      - id: two
+        run: echo "value is => ${{ steps.one.outputs[format('{0}-output', matrix.value)] }}"
+
   process-bash-associative-arrays:
     runs-on: ubuntu-latest
     steps:
