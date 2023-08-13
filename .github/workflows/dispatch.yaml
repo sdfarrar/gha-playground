@@ -1,0 +1,26 @@
+name: Dispatch Workfow
+on:
+  workflow_dispatch:
+    inputs:
+      myChoice:
+        type: choice
+        description: A choice value
+        required: true
+        options:
+          - foo
+          - bar
+          - baz
+
+jobs:
+  test-dispatch-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "The choice was ${{ inputs.myChoice }} (${{ github.event.inputs.myChoice }})"
+
+      - run: echo You picked foo
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.myChoice == 'foo' }}
+      - run: echo You picked bar
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.myChoice == 'bar' }}
+      - run: echo You picked baz
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.myChoice == 'baz' }}
