@@ -1,4 +1,4 @@
-name: Dispatch Workfow
+name: Dispatch Workflow
 on:
   workflow_dispatch:
     inputs:
@@ -12,15 +12,25 @@ on:
           - baz
 
 jobs:
+  prereq:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v3
+      - id: one
+        run: echo "val=true" >> $GITHUB_OUTPUT
+
   test-dispatch-inputs:
     runs-on: ubuntu-latest
+    if: always()
+    needs: prereq
     steps:
       - uses: actions/checkout@v3
       - run: echo "The choice was ${{ inputs.myChoice }} (${{ github.event.inputs.myChoice }})"
 
       - run: echo You picked foo
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.myChoice == 'foo' }}
+        if: ${{ needs.prereq.outputs.val == 'true' || (github.event_name == 'workflow_dispatch' && inputs.myChoice == 'foo') }}
       - run: echo You picked bar
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.myChoice == 'bar' }}
+        if: ${{ needs.prereq.outputs.val == 'true' || (github.event_name == 'workflow_dispatch' && inputs.myChoice == 'bar') }}
       - run: echo You picked baz
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.myChoice == 'baz' }}
+        if: ${{ needs.prereq.outputs.val == 'true' || (github.event_name == 'workflow_dispatch' && inputs.myChoice == 'baz') }}
